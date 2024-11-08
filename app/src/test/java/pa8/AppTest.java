@@ -7,8 +7,103 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    @Test
+    void testGraphMatrix() {
+    	Graph graph1 = new GraphMatrix(5);
+    	graph1.addEdge(0, 1);
+    	graph1.addWeightedEdge(1, 4, 100); //should ignore 100
+    	graph1.addEdge(0, 4);
+    	graph1.addEdge(3, 2);
+    	assertEquals("0 1 4", graph1.bfs(0));
+    	assertEquals("1 4", graph1.bfs(1));
+    	assertEquals("3 2", graph1.bfs(3));
+    	assertEquals("2", graph1.bfs(2));
+    	
+    	graph1.addEdge(4, 2);
+    	graph1.addEdge(1, 3);
+    	assertEquals("0 4 2 1 3", graph1.dfs(0));
+    	
+    	assertEquals(false, graph1.hasCycle());
+    	graph1.addEdge(2, 1);
+    	assertEquals(true, graph1.hasCycle());
+    	assertEquals("2 1", graph1.shortestPath(2, 1));
+    	assertEquals("2 1 4", graph1.shortestPath(2, 4));
+    	assertEquals("no path from 2 to 0", graph1.shortestPath(2, 0));
     }
+    
+    
+    @Test
+    void testGraphList() {
+    	Graph graph1 = new GraphList();
+    	graph1.addEdge(0, 1);
+    	graph1.addWeightedEdge(1, 4, 100); //should ignore 100
+    	graph1.addEdge(0, 4);
+    	graph1.addEdge(3, 2);
+    	assertEquals("0 1 4", graph1.bfs(0));
+    	assertEquals("1 4", graph1.bfs(1));
+    	assertEquals("3 2", graph1.bfs(3));
+    	assertEquals("2", graph1.bfs(2));
+    	
+    	graph1.addEdge(4, 2);
+    	graph1.addEdge(1, 3);
+    	assertEquals("0 4 2 1 3", graph1.dfs(0));
+    	
+    	assertEquals(false, graph1.hasCycle());
+    	graph1.addEdge(2, 1);
+    	assertEquals(true, graph1.hasCycle());
+    	assertEquals("2 1", graph1.shortestPath(2, 1));
+    	assertEquals("2 1 4", graph1.shortestPath(2, 4));
+    	assertEquals("no path from 2 to 0", graph1.shortestPath(2, 0));
+    }
+    
+    @Test
+    void testGraphMatrixWeighted() {
+    	Graph graph1 = new GraphMatrixWeighted(5);
+    	graph1.addEdge(0, 1); //should be 1
+    	graph1.addWeightedEdge(1, 4, 2); 
+    	graph1.addWeightedEdge(0, 4, 10);
+    	graph1.addWeightedEdge(3, 2, 2);
+    	assertEquals("0 1 4", graph1.bfs(0));
+    	assertEquals("1 4", graph1.bfs(1));
+    	assertEquals("3 2", graph1.bfs(3));
+    	assertEquals("2", graph1.bfs(2));
+    	
+    	graph1.addWeightedEdge(4, 2, 3);
+    	graph1.addWeightedEdge(1, 3, 0);
+    	assertEquals("0 4 2 1 3", graph1.dfs(0));
+    	
+    	assertEquals(false, graph1.hasCycle());
+    	graph1.addWeightedEdge(2, 1, 2);
+    	assertEquals(true, graph1.hasCycle());
+    	assertEquals("2 1", graph1.shortestPath(2, 1));
+    	assertEquals("2 1 4", graph1.shortestPath(2, 4));
+    	assertEquals("no path from 2 to 0", graph1.shortestPath(2, 0));
+    	assertEquals("0 1 4", graph1.shortestPath(0, 4));
+    }
+    
+    @Test
+    void testGraphListWeighted() {
+    	Graph graph1 = new GraphListWeighted();
+    	graph1.addEdge(0, 1); //should be 1
+    	graph1.addWeightedEdge(1, 4, 2); 
+    	graph1.addWeightedEdge(0, 4, 10);
+    	graph1.addWeightedEdge(3, 2, 2);
+    	assertEquals("0 1 4", graph1.bfs(0));
+    	assertEquals("1 4", graph1.bfs(1));
+    	assertEquals("3 2", graph1.bfs(3));
+    	assertEquals("2", graph1.bfs(2));
+    	
+    	graph1.addWeightedEdge(4, 2, 3);
+    	graph1.addWeightedEdge(1, 3, 0);
+    	assertEquals("0 4 2 1 3", graph1.dfs(0));
+    	
+    	assertEquals(false, graph1.hasCycle());
+    	graph1.addWeightedEdge(2, 1, 2);
+    	assertEquals(true, graph1.hasCycle());
+    	assertEquals("2 1", graph1.shortestPath(2, 1));
+    	assertEquals("2 1 4", graph1.shortestPath(2, 4));
+    	assertEquals("no path from 2 to 0", graph1.shortestPath(2, 0));
+    	assertEquals("0 1 4", graph1.shortestPath(0, 4));
+    }
+    
 }
